@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Coffee-Go App</title>
+  </head>
+  <body>
+    <p>Liverpool</p>
 
-</body>
+    <div class="card">
+      <div class="photo-container">
+        <img src="img/Cool-Coffee-Bar-in-Belgrade.jpg" alt="Coffee place in Belgrade" />
+      </div>
+      <div class="info-container">
+        <h1>Cool Coffee Bar</h1>
+        <p>Rating: <span>9.5</span></p>
+        <p>Coffee will get cold!</p>
+      </div>
+    </div>
+
+    <button onclick="getLocation()">Try It</button>
+    <p id="demo"></p>
+    
+    <script src="js/script.js"></script>
+
+  </body>
 </html>

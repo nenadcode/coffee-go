@@ -1,0 +1,23 @@
+.card {
+  width: 30%;
+  background-color: #efeff4;
+  border: 1px solid #c7cdcf;
+  margin: 0 auto;
+  padding: 20px 20px 10px; }
+  .card .photo-container {
+    display: inline-block;
+    width: 150px;
+    margin-right: 20px; }
+    .card .photo-container img {
+      width: 100%; }
+  .card .info-container {
+    display: inline-block;
+    width: 68%;
+    margin-top: 0;
+    vertical-align: top; }
+    .card .info-container h1 {
+      color: purple;
+      vertical-align: top;
+      margin-top: 0; }
+
+/*# sourceMappingURL=style.css.map */
