@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Coffee-Go App</title>
   </head>
-  <body>
-    <p>Liverpool</p>
-
-    <div class="card">
+  <body onload="getLocation()">
+    <!-- <div class="card">
       <div class="photo-container">
         <img src="img/Cool-Coffee-Bar-in-Belgrade.jpg" alt="Coffee place in Belgrade" />
       </div>
@@ -19,12 +17,10 @@
         <p>Rating: <span>9.5</span></p>
         <p>Coffee will get cold!</p>
       </div>
-    </div>
+    </div> -->
 
-    <button onclick="getLocation()">Try It</button>
-    <p id="demo"></p>
-    
+    <div id="wrapper"></div>
+
     <script src="js/script.js"></script>
-
   </body>
 </html>
