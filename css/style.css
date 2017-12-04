@@ -19,5 +19,7 @@
       color: purple;
       vertical-align: top;
       margin-top: 0; }
+    .card .info-container__address {
+      text-transform: capitalize; }
 
 /*# sourceMappingURL=style.css.map */
