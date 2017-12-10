@@ -1,25 +1,63 @@
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+
 .card {
+  display: flex;
   width: 30%;
   background-color: #efeff4;
-  border: 1px solid #c7cdcf;
-  margin: 0 auto;
+  border-top: 1px solid #c7cdcf;
+  margin: 10px auto;
   padding: 20px 20px 10px; }
-  .card .photo-container {
-    display: inline-block;
-    width: 150px;
+  .card__photo-container {
+    display: flex;
+    width: 200px;
+    height: 130px;
     margin-right: 20px; }
-    .card .photo-container img {
+    .card__photo-container img {
       width: 100%; }
-  .card .info-container {
-    display: inline-block;
-    width: 68%;
-    margin-top: 0;
-    vertical-align: top; }
-    .card .info-container h1 {
-      color: purple;
-      vertical-align: top;
-      margin-top: 0; }
-    .card .info-container__address {
-      text-transform: capitalize; }
+  .card__info-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; }
+    .card__info-container__name-rating-container {
+      display: flex;
+      justify-content: space-between; }
+      .card__info-container__name-rating-container h1 {
+        font-size: 35px;
+        color: #2d5be3;
+        vertical-align: top;
+        margin: 0 10px 0 0; }
+    .card__info-container__rating-container {
+      display: flex;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: green;
+      border-radius: 50%; }
+      .card__info-container__rating-container p {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        align-self: center;
+        color: #fff;
+        font-size: 20px; }
+    .card__info-container__address {
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: capitalize;
+      margin: 10px 0; }
+    .card__info-container__coffee-cold {
+      margin: 5px 0 10px 0; }
+  .card .success {
+    color: green; }
+  .card .warning {
+    color: red; }
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 50px; }
 
 /*# sourceMappingURL=style.css.map */

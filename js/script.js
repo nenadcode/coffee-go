@@ -13,9 +13,6 @@ function append(parent, el) {
 
 // END
 
-
-// Latitude and Longitude 44.792455499999996, 20.4915168
-
 // HTML5 Geolocation
 
 let getPosition = function (options) {
@@ -40,40 +37,49 @@ getPosition()
           let cardNode = createNode('div'),
               photoContainerNode = createNode('div'),
               infoContainerNode = createNode('div'),
+              nameRatingContainerNode = createNode('div'),
+              ratingContainerNode = createNode('div'),
               nameNode = createNode('h1'),
+              ratingsNode = createNode('p'),
               addressNode = createNode('p'),
-              ratingNode = createNode('p'),
-              ratingsSpanNode = createNode('span'),
               coffeeColdNode = createNode('p'),
-              coffeeColdSpanNode = createNode('span'),
 
               idValue = place.id
               nameValue = place.name,
-              addressValue = place.location.address, place.location.city,
-              coffeeColdSpanValue = place.location.distance,
+              addressValue = place.location.address, place.location.city
 
           cardNode.className = "card"
-          photoContainerNode.className = 'photo-container'
-          infoContainerNode.className = 'info-container'
-          addressNode.className = 'info-container__address'
+          photoContainerNode.className = 'card__photo-container'
+          infoContainerNode.className = 'card__info-container'
+          nameRatingContainerNode.className = 'card__info-container__name-rating-container'
+          ratingContainerNode.className = 'card__info-container__rating-container'
+          addressNode.className = 'card__info-container__address'
+          coffeeColdNode.className = 'card__info-container__coffee-cold'
 
-          nameNode.innerHTML = (nameValue) ? nameValue : '-',
-          addressNode.innerHTML = (addressValue) ? addressValue : 'Sorry, no address found for this venue.',
-          ratingNode.innerHTML = 'Rating: '
-          coffeeColdNode.innerHTML = 'Will the coffee get cold?'
-          coffeeColdSpanNode.innerHTML = (place.location.distance <= 1000) ? ' No! Go get it!' : (place.location.distance > 1000) ? ' Yes, try some other coffee shop.' : 'Sorry, not able to locate distance from your location.'
+          nameNode.innerHTML = (nameValue) ? nameValue : '-'
+          addressNode.innerHTML = (addressValue) ? addressValue : 'Sorry, no address found for this venue.'
 
-          append(infoContainerNode, nameNode),
+          if (place.location.distance <= 1000) {
+            coffeeColdNode.className += ' success'
+            coffeeColdNode.innerHTML = 'Coffee will stay warm. Go get it!'
+          } else if (place.location.distance > 1000) {
+            coffeeColdNode.className += ' warning'
+            coffeeColdNode.innerHTML = 'Coffee will get cold, try some other coffee shop.'
+          } else {
+            coffeeColdNode.innerHTML = 'Sorry, not able to locate distance from your location.'
+          }
+
+          append(nameRatingContainerNode, nameNode),
+          append(nameRatingContainerNode, ratingContainerNode),
+          append(ratingContainerNode, ratingsNode),
+          append(infoContainerNode, nameRatingContainerNode),
           append(infoContainerNode, addressNode),
-          append(infoContainerNode, ratingNode)
           append(infoContainerNode, coffeeColdNode),
           append(cardNode, photoContainerNode),
           append(cardNode, infoContainerNode),
-          append(ratingNode, ratingsSpanNode),
-          append(coffeeColdNode, coffeeColdSpanNode),
           append(wrapper, cardNode)
 
-          fetch('https://api.foursquare.com/v2/venues/' + idValue + '/photos?limit=1&client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
+          /* fetch('https://api.foursquare.com/v2/venues/' + idValue + '/photos?limit=1&client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
             .then((resp) => resp.json())
             .then(function(data) {
               let photos = data.response.photos.items
@@ -86,21 +92,39 @@ getPosition()
 
                 append(photoContainerNode, imgNode)
               })
-            })
+            }) */
 
           fetch('https://api.foursquare.com/v2/venues/' + idValue + '/?client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
             .then((resp) => resp.json())
             .then(function(data) {
-              let ratings = data.response.venue.rating
-              ratingsSpanNode.innerHTML = (ratings) ? ratings : '-'
+              let ratings = data.response.venue.rating,
+                  photo = data.response.venue.bestPhoto,
+                  imgNode = createNode('img'),
+                  imgSrcValue = photo.prefix + '100x100' + photo.suffix
+
+              imgNode.src = (imgSrcValue) ? imgSrcValue : '../img/no-image.jpg'
+
+              append(photoContainerNode, imgNode)
+
+              ratingsNode.innerHTML = (ratings) ? ratings : '-'
 
               return ratings
+
             })
         })
       })
   })
   .catch((err) => {
-    console.error(err.message);
+    let errorNode = createNode('p'),
+        errorSpanNode = createNode('span')
+
+    errorNode.className = 'error'
+
+    errorNode.innerHTML = 'Do you want to see where are closest Coffee Shops?'
+    errorSpanNode.innerHTML = 'Please allow Coffee Go to see your location.'
+
+    append(errorNode, errorSpanNode)
+    append(wrapper, errorNode)
   });
 
 
