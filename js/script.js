@@ -79,30 +79,16 @@ getPosition()
           append(cardNode, infoContainerNode),
           append(wrapper, cardNode)
 
-          /* fetch('https://api.foursquare.com/v2/venues/' + idValue + '/photos?limit=1&client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
-            .then((resp) => resp.json())
-            .then(function(data) {
-              let photos = data.response.photos.items
-
-              return photos.map(function(photo) {
-                let imgNode = createNode('img')
-                    imgSrcValue = photo.prefix + '100x100' + photo.suffix
-
-                imgNode.src = (imgSrcValue) ? imgSrcValue : '../img/no-image.jpg'
-
-                append(photoContainerNode, imgNode)
-              })
-            }) */
-
           fetch('https://api.foursquare.com/v2/venues/' + idValue + '/?client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
             .then((resp) => resp.json())
-            .then(function(data) {
+            .then(function (data) {
               let ratings = data.response.venue.rating,
-                  photo = data.response.venue.bestPhoto,
-                  imgNode = createNode('img'),
-                  imgSrcValue = photo.prefix + '100x100' + photo.suffix
+                venueHasPhoto = data.response.venue.hasOwnProperty('bestPhoto'),
+                photo = data.response.venue.bestPhoto,
+                imgNode = createNode('img'),
+                imgSrcValue = (venueHasPhoto) ? photo.prefix + '100x100' + photo.suffix : '../img/no-image.jpg'
 
-              imgNode.src = (imgSrcValue) ? imgSrcValue : '../img/no-image.jpg'
+              imgNode.src = imgSrcValue
 
               append(photoContainerNode, imgNode)
 
@@ -125,8 +111,7 @@ getPosition()
 
     append(errorNode, errorSpanNode)
     append(wrapper, errorNode)
-  });
-
+  })
 
 // END
 
