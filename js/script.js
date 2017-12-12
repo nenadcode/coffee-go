@@ -1,11 +1,6 @@
 const body = document.querySelector('body'),
   wrapper = document.querySelector('#wrapper')
 
-// Creating HTML elements
-
-
-// END
-
 // HTML5 Geolocation
 
 let getPosition = function () {
@@ -19,9 +14,9 @@ getPosition()
     let lat = position.coords.latitude,
         lng = position.coords.longitude
 
-    let venuesSearchUrl = ´${window.config.foursquareApi}?´
+    let venuesSearchUrl = `${window.config.foursquareApi}?`
 
-        venuesSearchUrl = window.config.foursquareApi + "?categoryId=4bf58dd8d48988d1e0931735&v=20131016&ll=" + lat + "," + lng + "&radius=1000&client_id=&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609"
+    venuesSearchUrl = window.config.foursquareApiSearch + "?categoryId=" + window.config.foursquareCategoryId + "&v=20131016&ll=" + lat + "," + lng + "&radius=" + window.config.foursquareRadius + "&client_id=" + window.config.foursquareClientId + "&client_secret=" + window.config.foursquareClientSecret + "&v=" + window.config.foursquareApiVersion
 
     // API call - Place name, img, foursquare rating, address, will the coffee get cold
     fetch(venuesSearchUrl)
@@ -80,13 +75,13 @@ getPosition()
           append(cardNode, infoContainerNode),
           append(wrapper, cardNode)
 
-          fetch('https://api.foursquare.com/v2/venues/' + idValue + '/?client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
+          fetch(foursquareApiVenue + idValue + '/?client_id=' + foursquareClientId + '&client_secret=' + foursquareClientSecret + '&v=' + foursquareApiVersion + ')
             .then((resp) => resp.json())
             .then(function (data) {
               let ratings = data.response.venue.rating,
                 venueHasPhoto = data.response.venue.hasOwnProperty('bestPhoto'),
                 photo = data.response.venue.bestPhoto,
-                imgNode = createNode('img'),
+                imgNode = DOM.createNode('img'),
                 imgSrcValue = (venueHasPhoto) ? photo.prefix + '100x100' + photo.suffix : '../img/no-image.jpg'
 
               imgNode.src = imgSrcValue

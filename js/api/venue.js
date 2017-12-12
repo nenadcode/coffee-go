@@ -1,6 +1,6 @@
 window.venueApi = (function () {
   function getVenueUrl () {
-    return ´${ window.config.foursquareApi }?´
+    return `${ window.config.foursquareApi }?`
   }
 
   function getVenue (id) {
