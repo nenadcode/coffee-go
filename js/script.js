@@ -1,31 +1,27 @@
-const body = document.getElementsByTagName('body'),
-      wrapper = document.getElementById('wrapper')
+const body = document.querySelector('body'),
+  wrapper = document.querySelector('#wrapper')
 
 // Creating HTML elements
 
-function createNode(element) {
-  return document.createElement(element)
-}
-
-function append(parent, el) {
-  return parent.appendChild(el)
-}
 
 // END
 
 // HTML5 Geolocation
 
-let getPosition = function (options) {
+let getPosition = function () {
   return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject, options);
+    navigator.geolocation.getCurrentPosition(resolve, reject);
   })
 }
 
 getPosition()
   .then((position) => {
     let lat = position.coords.latitude,
-        lng = position.coords.longitude,
-        venuesSearchUrl = "https://api.foursquare.com/v2/venues/search?categoryId=4bf58dd8d48988d1e0931735&v=20131016&ll=" + lat + "," + lng + "&radius=1000&client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609"
+        lng = position.coords.longitude
+
+    let venuesSearchUrl = ´${window.config.foursquareApi}?´
+
+        venuesSearchUrl = window.config.foursquareApi + "?categoryId=4bf58dd8d48988d1e0931735&v=20131016&ll=" + lat + "," + lng + "&radius=1000&client_id=&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609"
 
     // API call - Place name, img, foursquare rating, address, will the coffee get cold
     fetch(venuesSearchUrl)
@@ -33,16 +29,21 @@ getPosition()
       .then(function(data) {
         let places = data.response.venues
 
+        // return places.map(place => getPlaceTemplate(place))
+        //  .forEach(placeDom => {
+        //    append(placeDOM)
+        //  })
+
         return places.map(function(place) {
-          let cardNode = createNode('div'),
-              photoContainerNode = createNode('div'),
-              infoContainerNode = createNode('div'),
-              nameRatingContainerNode = createNode('div'),
-              ratingContainerNode = createNode('div'),
-              nameNode = createNode('h1'),
-              ratingsNode = createNode('p'),
-              addressNode = createNode('p'),
-              coffeeColdNode = createNode('p'),
+          let cardNode = DOM.createNode('div'),
+              photoContainerNode = DOM.createNode('div'),
+              infoContainerNode = DOM.createNode('div'),
+              nameRatingContainerNode = DOM.createNode('div'),
+              ratingContainerNode = DOM.createNode('div'),
+              nameNode = DOM.createNode('h1'),
+              ratingsNode = DOM.createNode('p'),
+              addressNode = DOM.createNode('p'),
+              coffeeColdNode = DOM.createNode('p'),
 
               idValue = place.id
               nameValue = place.name,
