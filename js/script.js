@@ -5,22 +5,17 @@ const body = document.querySelector('body'),
 
 let getPosition = function () {
   return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
+    navigator.geolocation.getCurrentPosition(resolve, reject)
   })
 }
 
 getPosition()
   .then((position) => {
     let lat = position.coords.latitude,
-        lng = position.coords.longitude
-
-    let venuesSearchUrl = `${window.config.foursquareApi}?`
-
-    venuesSearchUrl = window.config.foursquareApiSearch + "?categoryId=" + window.config.foursquareCategoryId + "&v=20131016&ll=" + lat + "," + lng + "&radius=" + window.config.foursquareRadius + "&client_id=" + window.config.foursquareClientId + "&client_secret=" + window.config.foursquareClientSecret + "&v=" + window.config.foursquareApiVersion
+      lng = position.coords.longitude
 
     // API call - Place name, img, foursquare rating, address, will the coffee get cold
-    fetch(venuesSearchUrl)
-      .then((resp) => resp.json())
+    getVenuesSearch
       .then(function(data) {
         let places = data.response.venues
 
@@ -31,18 +26,18 @@ getPosition()
 
         return places.map(function(place) {
           let cardNode = DOM.createNode('div'),
-              photoContainerNode = DOM.createNode('div'),
-              infoContainerNode = DOM.createNode('div'),
-              nameRatingContainerNode = DOM.createNode('div'),
-              ratingContainerNode = DOM.createNode('div'),
-              nameNode = DOM.createNode('h1'),
-              ratingsNode = DOM.createNode('p'),
-              addressNode = DOM.createNode('p'),
-              coffeeColdNode = DOM.createNode('p'),
+            photoContainerNode = DOM.createNode('div'),
+            infoContainerNode = DOM.createNode('div'),
+            nameRatingContainerNode = DOM.createNode('div'),
+            ratingContainerNode = DOM.createNode('div'),
+            nameNode = DOM.createNode('h1'),
+            ratingsNode = DOM.createNode('p'),
+            addressNode = DOM.createNode('p'),
+            coffeeColdNode = DOM.createNode('p'),
 
-              idValue = place.id
-              nameValue = place.name,
-              addressValue = place.location.address, place.location.city
+            idValue = place.id
+            nameValue = place.name,
+            addressValue = place.location.address, place.location.city
 
           cardNode.className = "card"
           photoContainerNode.className = 'card__photo-container'
@@ -75,8 +70,7 @@ getPosition()
           append(cardNode, infoContainerNode),
           append(wrapper, cardNode)
 
-          fetch(foursquareApiVenue + idValue + '/?client_id=' + foursquareClientId + '&client_secret=' + foursquareClientSecret + '&v=' + foursquareApiVersion + ')
-            .then((resp) => resp.json())
+          getVenue
             .then(function (data) {
               let ratings = data.response.venue.rating,
                 venueHasPhoto = data.response.venue.hasOwnProperty('bestPhoto'),
