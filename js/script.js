@@ -1,31 +1,22 @@
-const body = document.getElementsByTagName('body'),
-      wrapper = document.getElementById('wrapper')
-
-// Creating HTML elements
-
-function createNode(element) {
-  return document.createElement(element)
-}
-
-function append(parent, el) {
-  return parent.appendChild(el)
-}
-
-// END
+const body = document.querySelector('body'),
+  wrapper = document.querySelector('#wrapper')
 
 // HTML5 Geolocation
 
-let getPosition = function (options) {
+let getPosition = function () {
   return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject, options);
+    navigator.geolocation.getCurrentPosition(resolve, reject);
   })
 }
 
 getPosition()
   .then((position) => {
     let lat = position.coords.latitude,
-        lng = position.coords.longitude,
-        venuesSearchUrl = "https://api.foursquare.com/v2/venues/search?categoryId=4bf58dd8d48988d1e0931735&v=20131016&ll=" + lat + "," + lng + "&radius=1000&client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609"
+        lng = position.coords.longitude
+
+    let venuesSearchUrl = `${window.config.foursquareApi}?`
+
+    venuesSearchUrl = window.config.foursquareApiSearch + "?categoryId=" + window.config.foursquareCategoryId + "&v=20131016&ll=" + lat + "," + lng + "&radius=" + window.config.foursquareRadius + "&client_id=" + window.config.foursquareClientId + "&client_secret=" + window.config.foursquareClientSecret + "&v=" + window.config.foursquareApiVersion
 
     // API call - Place name, img, foursquare rating, address, will the coffee get cold
     fetch(venuesSearchUrl)
@@ -33,16 +24,21 @@ getPosition()
       .then(function(data) {
         let places = data.response.venues
 
+        // return places.map(place => getPlaceTemplate(place))
+        //  .forEach(placeDom => {
+        //    append(placeDOM)
+        //  })
+
         return places.map(function(place) {
-          let cardNode = createNode('div'),
-              photoContainerNode = createNode('div'),
-              infoContainerNode = createNode('div'),
-              nameRatingContainerNode = createNode('div'),
-              ratingContainerNode = createNode('div'),
-              nameNode = createNode('h1'),
-              ratingsNode = createNode('p'),
-              addressNode = createNode('p'),
-              coffeeColdNode = createNode('p'),
+          let cardNode = DOM.createNode('div'),
+              photoContainerNode = DOM.createNode('div'),
+              infoContainerNode = DOM.createNode('div'),
+              nameRatingContainerNode = DOM.createNode('div'),
+              ratingContainerNode = DOM.createNode('div'),
+              nameNode = DOM.createNode('h1'),
+              ratingsNode = DOM.createNode('p'),
+              addressNode = DOM.createNode('p'),
+              coffeeColdNode = DOM.createNode('p'),
 
               idValue = place.id
               nameValue = place.name,
@@ -79,13 +75,13 @@ getPosition()
           append(cardNode, infoContainerNode),
           append(wrapper, cardNode)
 
-          fetch('https://api.foursquare.com/v2/venues/' + idValue + '/?client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
+          fetch(foursquareApiVenue + idValue + '/?client_id=' + foursquareClientId + '&client_secret=' + foursquareClientSecret + '&v=' + foursquareApiVersion + ')
             .then((resp) => resp.json())
             .then(function (data) {
               let ratings = data.response.venue.rating,
                 venueHasPhoto = data.response.venue.hasOwnProperty('bestPhoto'),
                 photo = data.response.venue.bestPhoto,
-                imgNode = createNode('img'),
+                imgNode = DOM.createNode('img'),
                 imgSrcValue = (venueHasPhoto) ? photo.prefix + '100x100' + photo.suffix : '../img/no-image.jpg'
 
               imgNode.src = imgSrcValue
