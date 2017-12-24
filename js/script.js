@@ -1,5 +1,4 @@
-const body = document.getElementsByTagName('body'),
-  wrapper = document.getElementById('wrapper')
+const wrapper = document.getElementById('wrapper')
 
 // Creating HTML elements
 
@@ -25,7 +24,7 @@ getPosition()
   .then((position) => {
     let lat = position.coords.latitude,
       lng = position.coords.longitude,
-      venuesSearchUrl = "https://api.foursquare.com/v2/venues/search?categoryId=4bf58dd8d48988d1e0931735&v=20131016&ll=" + lat + "," + lng + "&radius=1000&client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609"
+      venuesSearchUrl = 'https://api.foursquare.com/v2/venues/search?categoryId=4bf58dd8d48988d1e0931735&v=20131016&ll=' + lat + ',' + lng + '&radius=1000&client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609'
 
     // API call - Place name, img, foursquare rating, address, will the coffee get cold
     fetch(venuesSearchUrl)
@@ -44,9 +43,9 @@ getPosition()
             addressNode = createNode('p'),
             coffeeColdNode = createNode('p'),
 
-            idValue = place.id
-          nameValue = place.name,
-            addressValue = place.location.address, place.location.city
+            idValue = place.id,
+            nameValue = place.name,
+            addressValue = place.location.address + ' ' +  place.location.city
 
           cardNode.className = "card"
           photoContainerNode.className = 'card__photo-container'
@@ -70,14 +69,14 @@ getPosition()
           }
 
           append(nameRatingContainerNode, nameNode),
-            append(nameRatingContainerNode, ratingContainerNode),
-            append(ratingContainerNode, ratingsNode),
-            append(infoContainerNode, nameRatingContainerNode),
-            append(infoContainerNode, addressNode),
-            append(infoContainerNode, coffeeColdNode),
-            append(cardNode, photoContainerNode),
-            append(cardNode, infoContainerNode),
-            append(wrapper, cardNode)
+          append(nameRatingContainerNode, ratingContainerNode),
+          append(ratingContainerNode, ratingsNode),
+          append(infoContainerNode, nameRatingContainerNode),
+          append(infoContainerNode, addressNode),
+          append(infoContainerNode, coffeeColdNode),
+          append(cardNode, photoContainerNode),
+          append(cardNode, infoContainerNode),
+          append(wrapper, cardNode)
 
           fetch('https://api.foursquare.com/v2/venues/' + idValue + '/?client_id=O4N5MBHQWS11LRWBBO15JTZWFC42WKSUKTQYMXJ1ZN1CIPXD&client_secret=X1043GY3LH0W4S54GT0RWL300R2144W5WUVJKQ30GI0O1F03&v=20120609')
             .then((resp) => resp.json())
@@ -100,7 +99,7 @@ getPosition()
         })
       })
   })
-  .catch((err) => {
+  .catch(() => {
     let errorNode = createNode('p'),
       errorSpanNode = createNode('span')
 
