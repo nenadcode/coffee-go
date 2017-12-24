@@ -3,8 +3,8 @@ window.venueApi = (function () {
     return `${window.config.foursquareApiSearch}`
   }
 
-  function getVenueUrl (id) {
-    return `${ window.config.foursquareApiVenue }/${id}/`
+  function getVenueUrl(id) {
+    return `${window.config.foursquareApiVenue}/${id}/`
   }
 
   function getVenuesSearch(lat, lng) {
@@ -14,7 +14,7 @@ window.venueApi = (function () {
       .then((resp) => resp.json())
   }
 
-  function getVenue (id) {
+  function getVenue(id) {
     let venueUrl = getVenueUrl(id) + '?client_id=' + window.config.foursquareClientId + '&client_secret=' + window.config.foursquareClientSecret + '&v=' + window.config.foursquareApiVersion
 
     return fetch(venueUrl)

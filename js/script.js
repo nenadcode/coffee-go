@@ -1,5 +1,4 @@
-const body = document.querySelector('body'),
-  wrapper = document.querySelector('#wrapper')
+const wrapper = document.querySelector('#wrapper')
 
 // HTML5 Geolocation
 
@@ -16,7 +15,7 @@ getPosition()
 
     // API call - Place name, img, foursquare rating, address, will the coffee get cold
     venueApi.getVenuesSearch(lat, lng)
-      .then(function(data) {
+      .then(function (data) {
         let places = data.response.venues
 
         return places
@@ -30,9 +29,9 @@ getPosition()
           })
       })
   })
-  .catch((err) => {
-    let errorNode = createNode('p'),
-      errorSpanNode = createNode('span')
+  .catch(() => {
+    let errorNode = DOM.createNode('p'),
+      errorSpanNode = DOM.createNode('span')
 
     errorNode.className = 'error'
 
@@ -44,7 +43,3 @@ getPosition()
   })
 
 // END
-
-
-
-

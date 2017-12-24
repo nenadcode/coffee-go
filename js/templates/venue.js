@@ -1,5 +1,5 @@
 window.venueTemplate = (function () {
-  function createVenueItem (place) {
+  function createVenueItem(place) {
     let cardNode = DOM.createNode('div'),
       photoContainerNode = DOM.createNode('div'),
       infoContainerNode = DOM.createNode('div'),
@@ -10,11 +10,10 @@ window.venueTemplate = (function () {
       addressNode = DOM.createNode('p'),
       coffeeColdNode = DOM.createNode('p'),
 
-      idValue = place.id,
       nameValue = place.name,
       addressValue = place.location.address + ' ' + place.location.city
 
-    cardNode.className = "card"
+    cardNode.className = 'card'
     photoContainerNode.className = 'card__photo-container'
     infoContainerNode.className = 'card__info-container'
     nameRatingContainerNode.className = 'card__info-container__name-rating-container'
